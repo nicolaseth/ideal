@@ -287,11 +287,16 @@
     <!-- GALLERY -->
     <div class="gallery-col">
       <div class="main-frame" id="mainFrame">
-        <img src="../images/7617902/1.jpg" alt="Foto 1" class="slide active" data-i="0">
+        <img src="../images/7617902/1.jpg" alt="Foto 1" class="slide active" data-i="0"><img src="../images/7617902/2.jpg" alt="Foto 2" class="slide" data-i="1">
         
+        <div class="g-ctrl">
+          <button id="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button id="next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+        <div class="g-counter"><span id="cur">1</span> / 2</div>
         <button class="g-expand" id="expand" title="Ver en pantalla completa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
       </div>
-      
+      <div class="thumbs"><img src="../images/7617902/1.jpg" class="thumb active" data-i="0" alt=""><img src="../images/7617902/2.jpg" class="thumb" data-i="1" alt=""></div>
     </div>
 
     <!-- INFO -->
@@ -348,7 +353,7 @@
   </footer>
 
   <script>
-    const srcs = ['../images/7617902/1.jpg'];
+    const srcs = ['../images/7617902/1.jpg','../images/7617902/2.jpg'];
     const slides = document.querySelectorAll('.slide');
     const thumbEls = document.querySelectorAll('.thumb');
     const counter = document.getElementById('cur');
@@ -367,6 +372,14 @@
     }
 
     
+    document.getElementById('prev').addEventListener('click', () => goTo(cur - 1));
+    document.getElementById('next').addEventListener('click', () => goTo(cur + 1));
+    thumbEls.forEach((t, i) => t.addEventListener('click', () => goTo(i)));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') goTo(cur - 1);
+      if (e.key === 'ArrowRight') goTo(cur + 1);
+      if (e.key === 'Escape') document.getElementById('lb').classList.remove('open');
+    });
 
     // Lightbox
     const lb = document.getElementById('lb');
@@ -383,6 +396,8 @@
     document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('open'));
     lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
     
+    document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
+    document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
   </script>
 </body>
 </html>

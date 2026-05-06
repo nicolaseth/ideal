@@ -287,9 +287,9 @@
     <!-- GALLERY -->
     <div class="gallery-col">
       <div class="main-frame" id="mainFrame">
-        <div class="no-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><span>Sin fotos disponibles</span></div>
+        <img src="../images/193335611/1.jpg" alt="Foto 1" class="slide active" data-i="0">
         
-        
+        <button class="g-expand" id="expand" title="Ver en pantalla completa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
       </div>
       
     </div>
@@ -335,12 +335,54 @@
 
   <!-- LIGHTBOX -->
   
+  <div class="lightbox" id="lb">
+    <button class="lb-close" id="lbClose">✕</button>
+    <button class="lb-prev" id="lbPrev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-next" id="lbNext"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
 
   <footer>
     <div class="f-logo">ideal<span>HOMES</span></div>
     <p class="f-sub">Tu apartamento ideal te está esperando</p>
   </footer>
 
-  
+  <script>
+    const srcs = ['../images/193335611/1.jpg'];
+    const slides = document.querySelectorAll('.slide');
+    const thumbEls = document.querySelectorAll('.thumb');
+    const counter = document.getElementById('cur');
+    let cur = 0;
+
+    function goTo(n) {
+      slides[cur] && slides[cur].classList.remove('active');
+      thumbEls[cur] && thumbEls[cur].classList.remove('active');
+      cur = ((n % srcs.length) + srcs.length) % srcs.length;
+      slides[cur] && slides[cur].classList.add('active');
+      thumbEls[cur] && thumbEls[cur].classList.add('active');
+      if (counter) counter.textContent = cur + 1;
+      thumbEls[cur] && thumbEls[cur].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+      if (document.getElementById('lb').classList.contains('open'))
+        document.getElementById('lbImg').src = srcs[cur];
+    }
+
+    
+
+    // Lightbox
+    const lb = document.getElementById('lb');
+    document.getElementById('expand').addEventListener('click', () => {
+      document.getElementById('lbImg').src = srcs[cur];
+      lb.classList.add('open');
+    });
+    document.getElementById('mainFrame').addEventListener('click', e => {
+      if (e.target.tagName === 'IMG') {
+        document.getElementById('lbImg').src = srcs[cur];
+        lb.classList.add('open');
+      }
+    });
+    document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('open'));
+    lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+    
+  </script>
 </body>
 </html>
