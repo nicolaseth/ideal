@@ -58,33 +58,44 @@
     /* ── HERO ── */
     .hero {
       background: linear-gradient(150deg, var(--green) 0%, var(--green-dark) 100%);
-      padding: 72px 28px 64px;
-      text-align: center;
+      padding: 40px 40px 40px;
       color: var(--white);
     }
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .hero-left { flex: 0 0 auto; }
+    .hero-right { flex: 1; max-width: 380px; }
+    @media (max-width: 640px) {
+      .hero-inner { flex-direction: column; align-items: flex-start; }
+      .hero-right { max-width: 100%; }
+    }
     .hero-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: rgba(255,255,255,.5);
-      margin-bottom: 14px;
+      margin-bottom: 6px;
     }
     .hero-title {
-      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
       font-weight: 800;
       letter-spacing: -1.5px;
-      line-height: 1.1;
-      margin-bottom: 16px;
+      line-height: 1.05;
     }
     .hero-title span { color: var(--cream); }
     .hero-sub {
-      font-size: clamp(0.9rem, 2vw, 1rem);
+      font-size: 0.9rem;
       color: rgba(255,255,255,.65);
-      max-width: 440px;
-      margin: 0 auto 28px;
       line-height: 1.6;
       font-weight: 400;
+      margin-bottom: 18px;
     }
     .hero-chip {
       display: inline-flex;
@@ -206,10 +217,16 @@
   </nav>
 
   <section class="hero">
-    <p class="hero-label">Selección personalizada</p>
-    <h1 class="hero-title">Bienvenida,<br><span>Gloria</span></h1>
-    <p class="hero-sub">Estas son las opciones de apartamento seleccionadas especialmente para ti</p>
-    <span class="hero-chip">8 opciones disponibles</span>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-label">Selección personalizada</p>
+        <h1 class="hero-title">Bienvenida,<br><span>Gloria</span></h1>
+      </div>
+      <div class="hero-right">
+        <p class="hero-sub">Estas son las opciones de apartamento seleccionadas especialmente para ti</p>
+        <span class="hero-chip">8 opciones disponibles</span>
+      </div>
+    </div>
   </section>
 
   <main class="section">
@@ -221,7 +238,7 @@
       
     <a class="card" href="193088432/">
       <div class="card-media">
-        <img src="../images/193088432/1.jpg" alt="Apartamento en El nogal" class="card-img" loading="lazy">
+        <img src="images/193088432/1.jpg" alt="Apartamento en El nogal" class="card-img" loading="lazy">
         <div class="card-barrio">El nogal</div>
         
       </div>
@@ -245,7 +262,7 @@
 
     <a class="card" href="7617902/">
       <div class="card-media">
-        <img src="../images/7617902/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
+        <img src="images/7617902/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
         <div class="card-barrio">Los rosales</div>
         
       </div>
@@ -269,7 +286,7 @@
 
     <a class="card" href="192139527/">
       <div class="card-media">
-        <img src="../images/192139527/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
+        <img src="images/192139527/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
         <div class="card-barrio">Los rosales</div>
         
       </div>
@@ -322,7 +339,7 @@
 
     <a class="card" href="193388151/">
       <div class="card-media">
-        <img src="../images/193388151/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
+        <img src="images/193388151/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
         <div class="card-barrio">Los rosales</div>
         <div class="photo-count">6 fotos</div>
       </div>
@@ -375,7 +392,7 @@
 
     <a class="card" href="191264284/">
       <div class="card-media">
-        <img src="../images/191264284/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
+        <img src="images/191264284/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
         <div class="card-barrio">Los rosales</div>
         
       </div>
@@ -399,7 +416,7 @@
 
     <a class="card" href="5744390/">
       <div class="card-media">
-        <img src="../images/5744390/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
+        <img src="images/5744390/1.jpg" alt="Apartamento en Los rosales" class="card-img" loading="lazy">
         <div class="card-barrio">Los rosales</div>
         <div class="photo-count">3 fotos</div>
       </div>
