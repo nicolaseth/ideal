@@ -8,6 +8,7 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
+      color-scheme: light;
       --green:  #00796b;
       --gd:     #005047;
       --footer: #002d27;
@@ -19,18 +20,18 @@
       --border: #e5e7eb;
       --r:      16px;
     }
+    html { background: #f2f4f3; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: #f2f4f3;
+      color: #111827;
       -webkit-font-smoothing: antialiased;
-      color-scheme: light;
     }
 
     /* NAV */
     nav {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
       height: 56px;
       display: flex;
       align-items: center;
@@ -38,15 +39,46 @@
       padding: 0 24px;
       position: sticky; top: 0; z-index: 200;
     }
-    .logo { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.4px; color: var(--text); text-decoration: none; }
-    .logo span { color: var(--green); }
+    .logo { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.4px; color: #111827; text-decoration: none; }
+    .logo span { color: #00796b; }
     .back-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      font-size: 0.8rem; font-weight: 600; color: #6b7280;
       text-decoration: none; transition: color .14s;
     }
-    .back-btn:hover { color: var(--green); }
+    .back-btn:hover { color: #00796b; }
     .back-btn svg { width: 15px; height: 15px; }
+
+    /* PITCH */
+    .pitch-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .pitch-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .pitch-label {
+      flex-shrink: 0;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #00796b;
+    }
+    .pitch-text {
+      font-size: 0.9rem;
+      color: #374151;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+    @media (max-width: 640px) {
+      .pitch-inner { flex-direction: column; gap: 6px; }
+    }
 
     /* PAGE GRID */
     .page {
@@ -163,7 +195,7 @@
     /* ── INFO PANEL ── */
     .info-col { display: flex; flex-direction: column; gap: 20px; }
     .card {
-      background: var(--white);
+      background: #ffffff;
       border-radius: var(--r);
       padding: 28px 24px;
       box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 18px rgba(0,0,0,.07);
@@ -244,6 +276,13 @@
     <div style="width:80px"></div>
   </nav>
 
+  <div class="pitch-bar">
+    <div class="pitch-inner">
+      <span class="pitch-label">Por qué este apartamento</span>
+      <p class="pitch-text">Este apartamento se encuentra en El nogal, uno de los sectores más exclusivos de Bogotá, reconocido por su tranquilidad, seguridad y cercanía a los mejores restaurantes y zonas comerciales de la ciudad. Destacamos construcción reciente (2022), lo que garantiza acabados modernos y excelente estado; además, generosa área de 222 m² que permite vivir con amplitud sin salir del corazón de la ciudad. Lo seleccionamos especialmente para ti porque su construcción reciente minimiza costos de mantenimiento a corto plazo y los espacios amplios se alinean con tu búsqueda de comodidad.</p>
+    </div>
+  </div>
+
   <div class="page">
     <!-- GALLERY -->
     <div class="gallery-col">
@@ -291,10 +330,6 @@
 
       
       
-      <div class="info-block obs-block">
-        <p class="block-title">Notas</p>
-        <p class="block-body">VALIDAR PISO. VALIDAR ESTUDIO</p>
-      </div>
     </div>
   </div>
 
