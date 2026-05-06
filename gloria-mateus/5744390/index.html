@@ -3,312 +3,366 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light"/>
   <title>Los rosales — Ideal Homes</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --green:      #00796b;
-      --green-dark: #005047;
-      --footer:     #002d27;
-      --cream:      #fdece5;
-      --bg:         #f4f6f5;
-      --white:      #ffffff;
-      --text:       #1a1a1a;
-      --muted:      #6b7280;
-      --border:     #e5e7eb;
-      --radius:     14px;
-      --shadow:     0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.06);
+      --green:  #00796b;
+      --gd:     #005047;
+      --footer: #002d27;
+      --cream:  #fdece5;
+      --bg:     #f2f4f3;
+      --white:  #ffffff;
+      --text:   #111827;
+      --muted:  #6b7280;
+      --border: #e5e7eb;
+      --r:      16px;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      color-scheme: light;
     }
+
+    /* NAV */
     nav {
       background: var(--white);
       border-bottom: 1px solid var(--border);
       height: 56px;
       display: flex;
       align-items: center;
-      padding: 0 28px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky; top: 0; z-index: 200;
     }
-    .logo {
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.4px;
-      color: var(--text);
-      text-decoration: none;
-    }
+    .logo { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.4px; color: var(--text); text-decoration: none; }
     .logo span { color: var(--green); }
-    footer {
-      background: var(--footer);
-      color: var(--cream);
-      text-align: center;
-      padding: 40px 24px;
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; transition: color .14s;
     }
-    .footer-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; }
-    .footer-logo span { color: var(--green); }
-    .footer-sub { font-size: 0.78rem; color: rgba(253,236,229,.45); }
+    .back-btn:hover { color: var(--green); }
+    .back-btn svg { width: 15px; height: 15px; }
 
-    /* ── BACK LINK ── */
-    .back-bar {
-      max-width: 960px;
+    /* PAGE GRID */
+    .page {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 18px 20px 0;
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.14s;
-    }
-    .back-link:hover { color: var(--green); }
-    .back-link svg { width: 14px; height: 14px; }
-
-    /* ── LAYOUT ── */
-    .detail-wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px 20px 60px;
+      padding: 28px 20px 80px;
       display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 28px;
+      grid-template-columns: 1fr 400px;
+      gap: 32px;
       align-items: start;
     }
-    @media (max-width: 720px) {
-      .detail-wrap { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 860px) { .page { grid-template-columns: 1fr; } }
 
     /* ── GALLERY ── */
-    .gallery-wrap { border-radius: var(--radius); overflow: hidden; background: var(--white); box-shadow: var(--shadow); }
-    .main-slide {
+    .gallery-col { display: flex; flex-direction: column; gap: 10px; }
+    .main-frame {
       position: relative;
-      height: 420px;
-      background: #e8f0ee;
+      border-radius: var(--r);
       overflow: hidden;
+      background: #d8e8e5;
+      aspect-ratio: 4/3;
+      cursor: zoom-in;
+      box-shadow: 0 4px 24px rgba(0,0,0,.12);
     }
-    @media (max-width: 720px) { .main-slide { height: 260px; } }
     .slide {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity .35s ease;
+      user-select: none;
     }
     .slide.active { opacity: 1; }
-    .no-photo {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      color: #9ab8b3; font-size: 0.85rem; font-weight: 500;
+    .no-img {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; color: #9ab8b3;
     }
-    .gallery-controls {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 12px;
-      pointer-events: none;
+    .no-img svg { width: 48px; height: 48px; opacity: .4; }
+    .no-img span { font-size: .82rem; font-weight: 500; }
+    .g-ctrl {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 14px; pointer-events: none;
     }
-    .gallery-controls button {
+    .g-ctrl button {
       pointer-events: all;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,.85);
-      backdrop-filter: blur(4px);
-      cursor: pointer;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,.9); backdrop-filter: blur(6px);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,.18);
+      transition: background .14s, transform .14s;
+    }
+    .g-ctrl button:hover { background: var(--white); transform: scale(1.08); }
+    .g-counter {
+      position: absolute; bottom: 14px; right: 16px;
+      background: rgba(0,0,0,.5); color: #fff;
+      font-size: .72rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px;
+      letter-spacing: .3px;
+    }
+    .g-expand {
+      position: absolute; top: 14px; right: 14px;
+      width: 34px; height: 34px; border-radius: 8px;
+      background: rgba(0,0,0,.4); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      color: var(--text);
-      box-shadow: 0 1px 4px rgba(0,0,0,.15);
-      transition: background 0.14s;
+      color: #fff; transition: background .14s;
     }
-    .gallery-controls button:hover { background: var(--white); }
-    .slide-counter {
-      position: absolute;
-      bottom: 12px; right: 14px;
-      background: rgba(0,0,0,.45);
-      color: var(--white);
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 100px;
-    }
+    .g-expand:hover { background: rgba(0,0,0,.65); }
     .thumbs {
-      display: flex;
-      gap: 6px;
-      padding: 10px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      background: var(--white);
+      display: flex; gap: 8px;
+      overflow-x: auto; scrollbar-width: none;
+      padding: 2px;
     }
     .thumbs::-webkit-scrollbar { display: none; }
     .thumb {
-      width: 72px; height: 52px;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      opacity: 0.55;
-      transition: opacity 0.14s;
-      flex-shrink: 0;
-      border: 2px solid transparent;
+      width: 80px; height: 58px; flex-shrink: 0;
+      object-fit: cover; border-radius: 8px;
+      cursor: pointer; border: 2.5px solid transparent;
+      opacity: .55; transition: opacity .14s, border-color .14s;
     }
     .thumb.active, .thumb:hover { opacity: 1; border-color: var(--green); }
 
-    /* ── INFO PANEL ── */
-    .info-panel {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.93);
+      align-items: center; justify-content: center;
     }
-    .info-barrio {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--green);
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw; max-height: 92vh;
+      object-fit: contain; border-radius: 6px;
+    }
+    .lb-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,.12); color: #fff;
+      cursor: pointer; font-size: 1.2rem; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .lb-prev, .lb-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,.12); color: #fff;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .14s;
+    }
+    .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,.25); }
+    .lb-prev { left: 20px; }
+    .lb-next { right: 20px; }
+
+    /* ── INFO PANEL ── */
+    .info-col { display: flex; flex-direction: column; gap: 20px; }
+    .card {
+      background: var(--white);
+      border-radius: var(--r);
+      padding: 28px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 18px rgba(0,0,0,.07);
+    }
+    .info-neighborhood {
+      font-size: .68rem; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 8px;
     }
     .info-price {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1;
-      color: var(--text);
+      font-size: 2.6rem; font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1;
+      color: var(--text); margin-bottom: 4px;
     }
-    .divider { height: 1px; background: var(--border); }
-    .detail-grid { display: flex; flex-direction: column; gap: 10px; }
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
+    .info-price-sub { font-size: .78rem; color: var(--muted); font-weight: 500; }
+
+    /* Feature tiles */
+    .feat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin-top: 22px;
     }
-    .detail-label { color: var(--muted); font-weight: 500; }
-    .detail-val { font-weight: 700; color: var(--text); }
-    .agenda-box {
-      background: #f0faf8;
-      border: 1px solid #b2dfdb;
-      border-radius: 10px;
+    .feat-tile {
+      background: var(--bg);
+      border-radius: 12px;
       padding: 14px 16px;
-      font-size: 0.82rem;
+      display: flex; flex-direction: column; gap: 5px;
     }
-    .agenda-box strong { color: var(--green-dark); display: block; margin-bottom: 4px; }
-    .agenda-box p { color: var(--text); line-height: 1.5; }
-    .cta {
-      display: block;
-      text-align: center;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background 0.14s, color 0.14s;
+    .feat-icon svg { width: 20px; height: 20px; color: var(--green); display: block; }
+    .feat-val { font-size: 1.25rem; font-weight: 800; color: var(--text); letter-spacing: -.5px; line-height: 1; }
+    .feat-label { font-size: .72rem; font-weight: 500; color: var(--muted); }
+
+    /* Secondary rows */
+    .sec-section { margin-top: 0; }
+    .sec-title { font-size: .68rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .sec-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+      font-size: .84rem;
     }
-    .cta-ghost {
-      background: transparent;
-      color: var(--green);
-      border: 1.5px solid var(--green);
+    .sec-row:last-child { border-bottom: none; }
+    .sec-label { color: var(--muted); font-weight: 500; }
+    .sec-val { font-weight: 700; color: var(--text); }
+
+    /* Agent */
+    .agent-box {
+      display: flex; align-items: center; gap: 14px;
     }
-    .cta-ghost:hover { background: var(--green); color: var(--white); }
+    .agent-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--green); color: #fff;
+      font-size: 1.1rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .agent-role { font-size: .7rem; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+    .agent-name { font-size: .9rem; font-weight: 700; color: var(--text); }
+
+    /* Info blocks */
+    .info-block { border-radius: 12px; padding: 16px 18px; }
+    .agenda-block { background: #f0faf8; border: 1px solid #b2dfdb; }
+    .obs-block { background: #fafafa; border: 1px solid var(--border); }
+    .block-title { font-size: .7rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+    .block-body { font-size: .84rem; color: var(--text); line-height: 1.6; }
+
+    /* Footer */
+    footer { background: var(--footer); color: var(--cream); text-align: center; padding: 40px 24px; }
+    .f-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -.4px; margin-bottom: 6px; }
+    .f-logo span { color: var(--green); }
+    .f-sub { font-size: .78rem; color: rgba(253,236,229,.4); }
   </style>
 </head>
 <body>
-  
   <nav>
-    <a class="logo" href="../">ideal<span>HOMES</span></a>
-  </nav>
-  <div class="back-bar">
-    <a href="../" class="back-link">
+    <a href="../" class="back-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
-      Volver a opciones
+      Opciones
     </a>
+    <a class="logo" href="../">ideal<span>HOMES</span></a>
+    <div style="width:80px"></div>
+  </nav>
+
+  <div class="page">
+    <!-- GALLERY -->
+    <div class="gallery-col">
+      <div class="main-frame" id="mainFrame">
+        <img src="../images/5744390/1.jpg" alt="Foto 1" class="slide active" data-i="0"><img src="../images/5744390/2.jpg" alt="Foto 2" class="slide" data-i="1"><img src="../images/5744390/3.jpg" alt="Foto 3" class="slide" data-i="2">
+        
+        <div class="g-ctrl">
+          <button id="prev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button id="next"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+        <div class="g-counter"><span id="cur">1</span> / 3</div>
+        <button class="g-expand" id="expand" title="Ver en pantalla completa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+      </div>
+      <div class="thumbs"><img src="../images/5744390/1.jpg" class="thumb active" data-i="0" alt=""><img src="../images/5744390/2.jpg" class="thumb" data-i="1" alt=""><img src="../images/5744390/3.jpg" class="thumb" data-i="2" alt=""></div>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-col">
+      <div class="card">
+        <p class="info-neighborhood">Los rosales</p>
+        <p class="info-price">$ 1.800 M</p>
+        <p class="info-price-sub">Precio de venta</p>
+        <div class="feat-grid">
+    <div class="feat-tile">
+      <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="feat-val">182 m²</div>
+      <div class="feat-label">Área</div>
+    </div>
+    <div class="feat-tile">
+      <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 16h20"/></svg></div>
+      <div class="feat-val">3</div>
+      <div class="feat-label">Habitaciones</div>
+    </div>
+    <div class="feat-tile">
+      <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="4" y1="13" x2="20" y2="13"/></svg></div>
+      <div class="feat-val">4</div>
+      <div class="feat-label">Baños</div>
+    </div>
+    <div class="feat-tile">
+      <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <div class="feat-val">2</div>
+      <div class="feat-label">Parqueaderos</div>
+    </div></div>
+      </div>
+
+      <div class="card sec-section">
+        <p class="sec-title">Detalles</p>
+        <div class="sec-row"><span class="sec-label">Año de construcción</span><span class="sec-val">2022</span></div><div class="sec-row"><span class="sec-label">Terraza</span><span class="sec-val">No</span></div><div class="sec-row"><span class="sec-label">Estudio</span><span class="sec-val">No</span></div><div class="sec-row"><span class="sec-label">Barrio</span><span class="sec-val">Los rosales</span></div>
+      </div>
+
+      
+      
+      <div class="info-block obs-block">
+        <p class="block-title">Notas</p>
+        <p class="block-body">VALIDAR PISO. VALIDAR ESTUDIO</p>
+      </div>
+    </div>
   </div>
 
-  <div class="detail-wrap">
-    <div class="gallery-wrap">
-      <div class="main-slide">
-        <img src="../images/5744390/1.jpg" alt="Foto 1" class="slide active" data-index="0">
-        <img src="../images/5744390/2.jpg" alt="Foto 2" class="slide" data-index="1">
-        <img src="../images/5744390/3.jpg" alt="Foto 3" class="slide" data-index="2">
-        <img src="../images/5744390/4.png" alt="Foto 4" class="slide" data-index="3">
-        <img src="../images/5744390/5.png" alt="Foto 5" class="slide" data-index="4">
-        
-        <div class="gallery-controls">
-          <button id="prev" aria-label="Anterior">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button id="next" aria-label="Siguiente">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-        <div class="slide-counter"><span id="cur">1</span> / 5</div>
-      </div>
-      <div class="thumbs"><img src="../images/5744390/1.jpg" class="thumb active" data-index="0" alt="Miniatura 1">
-        <img src="../images/5744390/2.jpg" class="thumb" data-index="1" alt="Miniatura 2">
-        <img src="../images/5744390/3.jpg" class="thumb" data-index="2" alt="Miniatura 3">
-        <img src="../images/5744390/4.png" class="thumb" data-index="3" alt="Miniatura 4">
-        <img src="../images/5744390/5.png" class="thumb" data-index="4" alt="Miniatura 5"></div>
-    </div>
-
-    <div class="info-panel">
-      <div>
-        <p class="info-barrio">Los rosales</p>
-        <p class="info-price">$ 1.800 M</p>
-      </div>
-      <div class="divider"></div>
-      <div class="detail-grid">
-        <div class="detail-row"><span class="detail-label">Área</span><span class="detail-val">182 m²</span></div>
-        <div class="detail-row"><span class="detail-label">Habitaciones</span><span class="detail-val">3</span></div>
-        <div class="detail-row"><span class="detail-label">Baños</span><span class="detail-val">4</span></div>
-        <div class="detail-row"><span class="detail-label">Parqueaderos</span><span class="detail-val">2</span></div>
-        <div class="detail-row"><span class="detail-label">Año construcción</span><span class="detail-val">2022</span></div>
-        <div class="detail-row"><span class="detail-label">Barrio</span><span class="detail-val">Los rosales</span></div>
-      </div>
-      
-    </div>
+  <!-- LIGHTBOX -->
+  
+  <div class="lightbox" id="lb">
+    <button class="lb-close" id="lbClose">✕</button>
+    <button class="lb-prev" id="lbPrev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-next" id="lbNext"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
   </div>
 
   <footer>
-    <div class="footer-logo">ideal<span>HOMES</span></div>
-    <p class="footer-sub">Tu apartamento ideal te está esperando</p>
+    <div class="f-logo">ideal<span>HOMES</span></div>
+    <p class="f-sub">Tu apartamento ideal te está esperando</p>
   </footer>
 
-  
   <script>
-    let cur = 0;
+    const srcs = ['../images/5744390/1.jpg','../images/5744390/2.jpg','../images/5744390/3.jpg'];
     const slides = document.querySelectorAll('.slide');
-    const thumbs = document.querySelectorAll('.thumb');
+    const thumbEls = document.querySelectorAll('.thumb');
     const counter = document.getElementById('cur');
+    let cur = 0;
+
     function goTo(n) {
-      slides[cur].classList.remove('active');
-      thumbs[cur] && thumbs[cur].classList.remove('active');
-      cur = (n + slides.length) % slides.length;
-      slides[cur].classList.add('active');
-      thumbs[cur] && thumbs[cur].classList.add('active');
+      slides[cur] && slides[cur].classList.remove('active');
+      thumbEls[cur] && thumbEls[cur].classList.remove('active');
+      cur = ((n % srcs.length) + srcs.length) % srcs.length;
+      slides[cur] && slides[cur].classList.add('active');
+      thumbEls[cur] && thumbEls[cur].classList.add('active');
       if (counter) counter.textContent = cur + 1;
-      thumbs[cur] && thumbs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      thumbEls[cur] && thumbEls[cur].scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+      if (document.getElementById('lb').classList.contains('open'))
+        document.getElementById('lbImg').src = srcs[cur];
     }
+
+    
     document.getElementById('prev').addEventListener('click', () => goTo(cur - 1));
     document.getElementById('next').addEventListener('click', () => goTo(cur + 1));
-    thumbs.forEach((t, i) => t.addEventListener('click', () => goTo(i)));
+    thumbEls.forEach((t, i) => t.addEventListener('click', () => goTo(i)));
     document.addEventListener('keydown', e => {
       if (e.key === 'ArrowLeft') goTo(cur - 1);
       if (e.key === 'ArrowRight') goTo(cur + 1);
+      if (e.key === 'Escape') document.getElementById('lb').classList.remove('open');
     });
+
+    // Lightbox
+    const lb = document.getElementById('lb');
+    document.getElementById('expand').addEventListener('click', () => {
+      document.getElementById('lbImg').src = srcs[cur];
+      lb.classList.add('open');
+    });
+    document.getElementById('mainFrame').addEventListener('click', e => {
+      if (e.target.tagName === 'IMG') {
+        document.getElementById('lbImg').src = srcs[cur];
+        lb.classList.add('open');
+      }
+    });
+    document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('open'));
+    lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('open'); });
+    
+    document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); goTo(cur - 1); });
+    document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); goTo(cur + 1); });
   </script>
 </body>
 </html>
