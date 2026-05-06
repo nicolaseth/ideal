@@ -241,10 +241,29 @@
   <div class="detail-wrap">
     <div class="gallery-wrap">
       <div class="main-slide">
-        <div class="no-photo">Sin fotos disponibles</div>
+        <img src="../images/193388151/1.jpg" alt="Foto 1" class="slide active" data-index="0">
+        <img src="../images/193388151/2.jpg" alt="Foto 2" class="slide" data-index="1">
+        <img src="../images/193388151/3.jpg" alt="Foto 3" class="slide" data-index="2">
+        <img src="../images/193388151/4.jpg" alt="Foto 4" class="slide" data-index="3">
+        <img src="../images/193388151/5.jpg" alt="Foto 5" class="slide" data-index="4">
+        <img src="../images/193388151/6.jpg" alt="Foto 6" class="slide" data-index="5">
         
+        <div class="gallery-controls">
+          <button id="prev" aria-label="Anterior">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button id="next" aria-label="Siguiente">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="slide-counter"><span id="cur">1</span> / 6</div>
       </div>
-      
+      <div class="thumbs"><img src="../images/193388151/1.jpg" class="thumb active" data-index="0" alt="Miniatura 1">
+        <img src="../images/193388151/2.jpg" class="thumb" data-index="1" alt="Miniatura 2">
+        <img src="../images/193388151/3.jpg" class="thumb" data-index="2" alt="Miniatura 3">
+        <img src="../images/193388151/4.jpg" class="thumb" data-index="3" alt="Miniatura 4">
+        <img src="../images/193388151/5.jpg" class="thumb" data-index="4" alt="Miniatura 5">
+        <img src="../images/193388151/6.jpg" class="thumb" data-index="5" alt="Miniatura 6"></div>
     </div>
 
     <div class="info-panel">
@@ -263,7 +282,6 @@
         <div class="detail-row"><span class="detail-label">Barrio</span><span class="detail-val">Los rosales</span></div>
       </div>
       
-      <div class="divider"></div><a href="https://v2.domus.la/file/property/MzI5MDIzNg==/MA==/MzMyMA==" target="_blank" rel="noopener" class="cta cta-ghost">Ver ficha multimedia</a>
     </div>
   </div>
 
@@ -273,5 +291,27 @@
   </footer>
 
   
+  <script>
+    let cur = 0;
+    const slides = document.querySelectorAll('.slide');
+    const thumbs = document.querySelectorAll('.thumb');
+    const counter = document.getElementById('cur');
+    function goTo(n) {
+      slides[cur].classList.remove('active');
+      thumbs[cur] && thumbs[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      thumbs[cur] && thumbs[cur].classList.add('active');
+      if (counter) counter.textContent = cur + 1;
+      thumbs[cur] && thumbs[cur].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+    document.getElementById('prev').addEventListener('click', () => goTo(cur - 1));
+    document.getElementById('next').addEventListener('click', () => goTo(cur + 1));
+    thumbs.forEach((t, i) => t.addEventListener('click', () => goTo(i)));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') goTo(cur - 1);
+      if (e.key === 'ArrowRight') goTo(cur + 1);
+    });
+  </script>
 </body>
 </html>
