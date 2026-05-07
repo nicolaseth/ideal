@@ -26,6 +26,7 @@
       background: #f2f4f3;
       color: #111827;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* NAV */
@@ -89,11 +90,13 @@
       grid-template-columns: 1fr 400px;
       gap: 32px;
       align-items: start;
+      box-sizing: border-box;
+      width: 100%;
     }
     @media (max-width: 860px) { .page { grid-template-columns: 1fr; } }
 
     /* ── GALLERY ── */
-    .gallery-col { display: flex; flex-direction: column; gap: 10px; }
+    .gallery-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
     .main-frame {
       position: relative;
       border-radius: var(--r);
@@ -102,6 +105,8 @@
       aspect-ratio: 4/3;
       cursor: zoom-in;
       box-shadow: 0 4px 24px rgba(0,0,0,.12);
+      width: 100%;
+      max-width: 100%;
     }
     .slide {
       position: absolute; inset: 0;
@@ -152,6 +157,7 @@
       display: flex; gap: 8px;
       overflow-x: auto; scrollbar-width: none;
       padding: 2px;
+      max-width: 100%;
     }
     .thumbs::-webkit-scrollbar { display: none; }
     .thumb {
@@ -193,7 +199,7 @@
     .lb-next { right: 20px; }
 
     /* ── INFO PANEL ── */
-    .info-col { display: flex; flex-direction: column; gap: 20px; }
+    .info-col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
     .card {
       background: #ffffff;
       border-radius: var(--r);
