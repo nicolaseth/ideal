@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Ideal Homes — Opciones para Laura</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:      #00796b;
+      --green-dark: #005047;
+      --footer:     #002d27;
+      --cream:      #fdece5;
+      --bg:         #f4f6f5;
+      --white:      #ffffff;
+      --text:       #1a1a1a;
+      --muted:      #6b7280;
+      --border:     #e5e7eb;
+      --radius:     14px;
+      --shadow:     0 1px 3px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.06);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--green); }
+    footer {
+      background: var(--footer);
+      color: var(--cream);
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .footer-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; }
+    .footer-logo span { color: var(--green); }
+    .footer-sub { font-size: 0.78rem; color: rgba(253,236,229,.45); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(150deg, var(--green) 0%, var(--green-dark) 100%);
+      padding: 40px 40px 40px;
+      color: var(--white);
+    }
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .hero-left { flex: 0 0 auto; }
+    .hero-right { flex: 1; max-width: 380px; }
+    @media (max-width: 640px) {
+      .hero-inner { flex-direction: column; align-items: flex-start; }
+      .hero-right { max-width: 100%; }
+    }
+    .hero-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 6px;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+    }
+    .hero-title span { color: var(--cream); }
+    .hero-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.6;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 100px;
+    }
+    .hero-chip::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+
+    /* ── GRID ── */
+    .section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 20px 72px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .section-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+    .card-media { position: relative; }
+    .card-img { width: 100%; height: 210px; object-fit: cover; display: block; }
+    .card-img-placeholder {
+      height: 210px;
+      background: linear-gradient(135deg, #e8f0ee 0%, #d4e5e1 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #9ab8b3;
+    }
+    .card-barrio {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.58));
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 28px 12px 10px;
+    }
+    .photo-count {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(0,0,0,.45);
+      color: var(--white);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+    .card-body { padding: 16px 16px 10px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .card-price { font-size: 1.45rem; font-weight: 800; color: var(--text); letter-spacing: -0.6px; line-height: 1; }
+    .card-stats { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 100px; padding: 4px 9px;
+      font-size: 0.75rem; font-weight: 600; color: var(--text);
+    }
+    .pill svg { color: var(--green); flex-shrink: 0; }
+    .card-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+    .badge { font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 100px; }
+    .terraza { background: #dcfce7; color: #15803d; }
+    .estudio  { background: #dbeafe; color: #1d4ed8; }
+    .card-meta { font-size: 0.73rem; color: var(--muted); font-weight: 500; display:inline-flex;align-items:center;gap:3px; }
+    .card-meta-row { display:flex;flex-wrap:wrap;gap:6px;align-items:center; }
+    /* Card carousel */
+    .card-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,.88); color: #1a1a1a;
+      font-size: 1.4rem; line-height:1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
+      opacity: 0; transition: opacity .16s;
+      z-index: 10;
+    }
+    .card-media:hover .card-nav { opacity: 1; }
+    .card-nav-prev { left: 8px; }
+    .card-nav-next { right: 8px; }
+    .card-img-counter {
+      position: absolute; bottom: 36px; right: 10px;
+      background: rgba(0,0,0,.5); color: #fff;
+      font-size: .65rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 100px;
+      opacity: 0; transition: opacity .16s;
+      pointer-events: none;
+    }
+    .card-media:hover .card-img-counter { opacity: 1; }
+    .card-footer {
+      padding: 10px 16px 16px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+  </style>
+</head>
+<body>
+  
+  <nav>
+    <a href="#" style="display:flex;align-items:center;">
+      <img src="../logo.png" alt="Ideal Homes" style="height:38px;width:auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+      <span class="logo" style="display:none;">ideal<span>HOMES</span></span>
+    </a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-label">Selección personalizada</p>
+        <h1 class="hero-title">Bienvenida,<br><span>Laura</span></h1>
+      </div>
+      <div class="hero-right">
+        <p class="hero-sub">Estas son las opciones de apartamento seleccionadas especialmente para ti</p>
+        <span class="hero-chip">1 opción disponible</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="section">
+    <div class="section-header">
+      <span class="section-title">Apartamentos seleccionados</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid">
+      
+    <a class="card" href="191450255/">
+      <div class="card-media" data-imgs='["images/191450255/1.jpg","images/191450255/10.jpg","images/191450255/11.jpg","images/191450255/12.jpg","images/191450255/13.jpg","images/191450255/14.jpg","images/191450255/15.jpg","images/191450255/16.jpg","images/191450255/17.jpg","images/191450255/18.jpg","images/191450255/19.jpg","images/191450255/2.jpg","images/191450255/20.jpg","images/191450255/3.jpg","images/191450255/4.jpg","images/191450255/5.jpg","images/191450255/6.jpg","images/191450255/7.jpg","images/191450255/8.jpg","images/191450255/9.jpg"]'>
+        <img src="images/191450255/1.jpg" alt="Apartamento en La cabrera" class="card-img" loading="lazy">
+        <div class="card-barrio">La cabrera</div>
+        
+        <button class="card-nav card-nav-prev" data-dir="-1" title="Anterior">&#8249;</button>
+        <button class="card-nav card-nav-next" data-dir="1" title="Siguiente">&#8250;</button>
+        <div class="card-img-counter"><span class="card-img-cur">1</span>&nbsp;/&nbsp;20</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">$ 2.380 M</div>
+        <div class="card-stats">
+          <div class="pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>151 m²</div>
+          <div class="pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 16h20"/></svg>3 hab.</div>
+          <div class="pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="4" y1="13" x2="20" y2="13"/></svg>4 baños</div>
+          <div class="pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>2 parq.</div>
+          <div class="pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>Piso 6</div>
+        </div>
+        
+        <div class="card-meta-row">
+          
+          
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-cta">Ver detalles
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-logo">ideal<span>HOMES</span></div>
+    <p class="footer-sub">Tu apartamento ideal te está esperando</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.card-media[data-imgs]').forEach(media => {
+      const imgs = JSON.parse(media.dataset.imgs);
+      let cur = 0;
+      const img = media.querySelector('.card-img');
+      const counter = media.querySelector('.card-img-cur');
+      media.querySelectorAll('.card-nav').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault(); e.stopPropagation();
+          cur = ((cur + parseInt(btn.dataset.dir)) + imgs.length) % imgs.length;
+          img.src = imgs[cur];
+          if (counter) counter.textContent = cur + 1;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
