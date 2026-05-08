@@ -232,6 +232,11 @@
     .feat-icon svg { width: 20px; height: 20px; color: var(--green); display: block; }
     .feat-val { font-size: 1.25rem; font-weight: 800; color: var(--text); letter-spacing: -.5px; line-height: 1; }
     .feat-label { font-size: .72rem; font-weight: 500; color: var(--muted); }
+    @media (max-width: 540px) {
+      .card { padding: 18px 16px; }
+      .info-price { font-size: 1.9rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+    }
 
     /* Secondary rows */
     .sec-section { margin-top: 0; }
