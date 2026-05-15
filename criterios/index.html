@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light"/>
+  <title>Ideal Homes — Criterios de búsqueda</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      color-scheme: light;
+      --green:   #00796b;
+      --gd:      #005047;
+      --footer:  #002d27;
+      --cream:   #fdece5;
+      --bg:      #f2f4f3;
+      --white:   #ffffff;
+      --text:    #111827;
+      --muted:   #6b7280;
+      --border:  #e5e7eb;
+      --r:       12px;
+    }
+    html { background: #f2f4f3; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
+      background: #f2f4f3;
+      color: #111827;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.4px; color: #111827; text-decoration: none; }
+    .logo span { color: #00796b; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(150deg, var(--green) 0%, var(--gd) 100%);
+      padding: 40px 28px 36px;
+      color: #fff;
+    }
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+    .hero-label { font-size: .68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 8px; }
+    .hero-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 8px; }
+    .hero-title span { color: var(--cream); }
+    .hero-sub { font-size: .9rem; color: rgba(255,255,255,.65); font-weight: 400; line-height: 1.5; }
+
+    /* FORM WRAP */
+    .form-wrap { max-width: 720px; margin: 0 auto; padding: 32px 20px 72px; }
+
+    /* CARD */
+    .card {
+      background: #ffffff;
+      border-radius: var(--r);
+      box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.07);
+      padding: 28px 28px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 560px) { .card { padding: 20px 18px; } }
+
+    .section-title {
+      font-size: .68rem; font-weight: 800; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 18px;
+    }
+
+    /* FORM ELEMENTS */
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+    label {
+      display: block;
+      font-size: .8rem; font-weight: 600; color: var(--muted);
+      margin-bottom: 6px; letter-spacing: .2px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--text);
+      transition: border-color .14s;
+      appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(0,121,107,.1);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+
+    /* GRID */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) {
+      .field-row, .field-row-3 { grid-template-columns: 1fr; }
+    }
+
+    /* RADIO GROUP */
+    .radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
+    .radio-pill input { display: none; }
+    .radio-pill label {
+      display: flex; align-items: center; justify-content: center;
+      padding: 9px 22px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: .85rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; transition: all .14s;
+      margin-bottom: 0;
+    }
+    .radio-pill input:checked + label {
+      border-color: var(--green); background: var(--green); color: #fff;
+    }
+
+    /* PRICE RANGE */
+    .price-range { display: flex; align-items: center; gap: 10px; }
+    .price-range input { text-align: center; }
+    .price-sep { color: var(--muted); font-size: .85rem; font-weight: 600; flex-shrink: 0; }
+    .price-unit { font-size: .72rem; color: var(--muted); font-weight: 500; text-align: center; margin-top: 4px; }
+
+    /* STEPPER */
+    .stepper {
+      display: flex; align-items: center;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      overflow: hidden; background: #fff;
+    }
+    .stepper button {
+      width: 40px; height: 42px; border: none;
+      background: #f9fafb; color: var(--text);
+      font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; flex-shrink: 0;
+      transition: background .12s;
+    }
+    .stepper button:hover { background: #e8f0ee; color: var(--green); }
+    .stepper input {
+      flex: 1; border: none; border-left: 1.5px solid var(--border);
+      border-right: 1.5px solid var(--border);
+      border-radius: 0; text-align: center;
+      font-size: .95rem; font-weight: 700;
+      padding: 0; height: 42px; min-width: 0;
+      box-shadow: none;
+    }
+    .stepper input:focus { border-color: var(--border); box-shadow: none; }
+
+    /* CHECKBOX GRID */
+    .cb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 560px) { .cb-grid { grid-template-columns: repeat(2, 1fr); } }
+    .cb-item { display: flex; align-items: center; gap: 8px; }
+    .cb-item input[type="checkbox"] {
+      width: 17px; height: 17px; min-width: 17px;
+      accent-color: var(--green);
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .cb-item label {
+      font-size: .82rem; font-weight: 500; color: var(--text);
+      cursor: pointer; margin-bottom: 0; letter-spacing: 0;
+    }
+    .zone-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--muted);
+      margin: 14px 0 8px; grid-column: 1 / -1;
+    }
+    .zone-label:first-child { margin-top: 0; }
+
+    /* AMENITIES */
+    .amenity-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .amenity { display: flex; align-items: center; gap: 8px; }
+    .amenity input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--green); cursor: pointer; }
+    .amenity label { font-size: .85rem; font-weight: 600; color: var(--text); cursor: pointer; margin-bottom: 0; }
+
+    /* OTHER BARRIO */
+    .other-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; grid-column: 1 / -1; }
+    .other-row input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; }
+    .other-row label { font-size: .82rem; font-weight: 500; color: var(--text); cursor: pointer; margin-bottom: 0; flex-shrink: 0; }
+    #otro-text { flex: 1; display: none; }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%; padding: 15px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: var(--r);
+      font-size: .95rem; font-weight: 800;
+      font-family: inherit; cursor: pointer;
+      letter-spacing: .3px;
+      transition: background .14s;
+    }
+    .submit-btn:hover { background: var(--gd); }
+    .submit-btn:disabled { background: var(--muted); cursor: not-allowed; }
+
+    /* THANK YOU */
+    #thank-you {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .ty-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #d1fae5; color: #065f46;
+      font-size: 1.8rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .ty-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
+    .ty-sub { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+    /* FOOTER */
+    footer { background: var(--footer); color: var(--cream); text-align: center; padding: 36px 24px; }
+    .f-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -.4px; margin-bottom: 6px; }
+    .f-logo span { color: var(--green); }
+    .f-sub { font-size: .78rem; color: rgba(253,236,229,.4); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="#">ideal<span>HOMES</span></a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">Ideal Homes</p>
+      <h1 class="hero-title">Cuéntanos<br><span>qué buscas</span></h1>
+      <p class="hero-sub">Completa el formulario y te contactaremos con las mejores opciones para ti.</p>
+    </div>
+  </section>
+
+  <div class="form-wrap">
+
+    <!-- THANK YOU STATE -->
+    <div id="thank-you" class="card">
+      <div class="ty-icon">✓</div>
+      <p class="ty-title">¡Listo, <span id="ty-name"></span>!</p>
+      <p class="ty-sub">Recibimos tus criterios de búsqueda.<br>Nos pondremos en contacto contigo muy pronto.</p>
+    </div>
+
+    <!-- FORM -->
+    <form id="criteria-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+
+      <!-- 1. DATOS PERSONALES -->
+      <div class="card">
+        <p class="section-title">Datos personales</p>
+        <div class="field">
+          <label for="nombre">Nombre completo *</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre completo"/>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="telefono">Teléfono *</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="+57 300 000 0000"/>
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="tu@email.com"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TIPO DE OPERACIÓN -->
+      <div class="card">
+        <p class="section-title">Tipo de operación</p>
+        <div class="radio-group">
+          <div class="radio-pill">
+            <input type="radio" id="tipo-compra" name="tipo" value="Compra" required/>
+            <label for="tipo-compra">Compra</label>
+          </div>
+          <div class="radio-pill">
+            <input type="radio" id="tipo-arriendo" name="tipo" value="Arriendo"/>
+            <label for="tipo-arriendo">Arriendo</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PRESUPUESTO -->
+      <div class="card">
+        <p class="section-title">Presupuesto</p>
+        <label>Rango de precio (en millones COP)</label>
+        <div class="price-range">
+          <div style="flex:1">
+            <input type="number" id="precio-min" name="precio_min" min="100" max="10000" placeholder="Mínimo" style="text-align:center"/>
+            <p class="price-unit">Mín (millones)</p>
+          </div>
+          <span class="price-sep">—</span>
+          <div style="flex:1">
+            <input type="number" id="precio-max" name="precio_max" min="100" max="10000" placeholder="Máximo" style="text-align:center"/>
+            <p class="price-unit">Máx (millones)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. CARACTERÍSTICAS -->
+      <div class="card">
+        <p class="section-title">Características mínimas</p>
+        <div class="field-row">
+          <div class="field">
+            <label>Habitaciones</label>
+            <div class="stepper">
+              <button type="button" onclick="step('hab',-1)">−</button>
+              <input type="number" id="hab" name="habitaciones_min" value="2" min="1" max="9" readonly/>
+              <button type="button" onclick="step('hab',1)">+</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Baños</label>
+            <div class="stepper">
+              <button type="button" onclick="step('ban',-1)">−</button>
+              <input type="number" id="ban" name="banos_min" value="2" min="1" max="9" readonly/>
+              <button type="button" onclick="step('ban',1)">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="field-row" style="margin-top:14px">
+          <div class="field">
+            <label>Parqueaderos</label>
+            <div class="stepper">
+              <button type="button" onclick="step('parq',-1)">−</button>
+              <input type="number" id="parq" name="parqueaderos_min" value="1" min="0" max="5" readonly/>
+              <button type="button" onclick="step('parq',1)">+</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Metraje mínimo (m²)</label>
+            <input type="number" id="metraje" name="metraje_min" min="30" placeholder="Ej: 120"/>
+          </div>
+        </div>
+        <div class="field-row" style="margin-top:14px">
+          <div class="field">
+            <label>Piso mínimo</label>
+            <input type="number" id="piso" name="piso_min" min="1" placeholder="Ej: 3"/>
+          </div>
+          <div class="field">
+            <label>Año de construcción mínimo</label>
+            <input type="number" id="anio" name="anio_construccion_min" min="1970" max="2026" placeholder="Ej: 2010"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. BARRIOS -->
+      <div class="card">
+        <p class="section-title">Barrios de interés</p>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px">Selecciona todos los que te interesen.</p>
+        <div class="cb-grid">
+
+          <p class="zone-label">Norte exclusivo</p>
+          <div class="cb-item"><input type="checkbox" id="b-chico" name="barrios" value="El Chico"/><label for="b-chico">El Chico</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-chico-res" name="barrios" value="Chicó Reservado"/><label for="b-chico-res">Chicó Reservado</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-nogal" name="barrios" value="El Nogal"/><label for="b-nogal">El Nogal</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-rosales" name="barrios" value="Los Rosales"/><label for="b-rosales">Los Rosales</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-cabrera" name="barrios" value="La Cabrera"/><label for="b-cabrera">La Cabrera</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-retiro" name="barrios" value="El Retiro"/><label for="b-retiro">El Retiro</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-virrey" name="barrios" value="El Virrey"/><label for="b-virrey">El Virrey</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-carolina" name="barrios" value="La Carolina"/><label for="b-carolina">La Carolina</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-polo" name="barrios" value="El Polo"/><label for="b-polo">El Polo</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-country" name="barrios" value="Country Club"/><label for="b-country">Country Club</label></div>
+
+          <p class="zone-label">Usaquén / Norte</p>
+          <div class="cb-item"><input type="checkbox" id="b-usaquen" name="barrios" value="Usaquén"/><label for="b-usaquen">Usaquén</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-barbara" name="barrios" value="Santa Bárbara"/><label for="b-barbara">Santa Bárbara</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-calleja" name="barrios" value="La Calleja"/><label for="b-calleja">La Calleja</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-cedritos" name="barrios" value="Cedritos"/><label for="b-cedritos">Cedritos</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-niza" name="barrios" value="Niza"/><label for="b-niza">Niza</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-colina" name="barrios" value="Colina Campestre"/><label for="b-colina">Colina Campestre</label></div>
+
+          <p class="zone-label">Centro norte / Chapinero</p>
+          <div class="cb-item"><input type="checkbox" id="b-zonag" name="barrios" value="Zona G"/><label for="b-zonag">Zona G</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-zonar" name="barrios" value="Zona Rosa"/><label for="b-zonar">Zona Rosa</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-lago" name="barrios" value="El Lago"/><label for="b-lago">El Lago</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-emaus" name="barrios" value="Emaus"/><label for="b-emaus">Emaus</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-bella" name="barrios" value="Bellavista"/><label for="b-bella">Bellavista</label></div>
+          <div class="cb-item"><input type="checkbox" id="b-quinta" name="barrios" value="Quinta Camacho"/><label for="b-quinta">Quinta Camacho</label></div>
+
+          <div class="other-row">
+            <input type="checkbox" id="b-otro" onclick="document.getElementById('otro-text').style.display=this.checked?'block':'none'"/>
+            <label for="b-otro">Otro:</label>
+            <input type="text" id="otro-text" name="barrio_otro" placeholder="Escribe el barrio"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. AMENIDADES -->
+      <div class="card">
+        <p class="section-title">Amenidades deseadas</p>
+        <div class="amenity-row">
+          <div class="amenity">
+            <input type="checkbox" id="terraza" name="amenidades" value="Terraza"/>
+            <label for="terraza">Terraza</label>
+          </div>
+          <div class="amenity">
+            <input type="checkbox" id="estudio" name="amenidades" value="Estudio"/>
+            <label for="estudio">Estudio</label>
+          </div>
+          <div class="amenity">
+            <input type="checkbox" id="bano-servicio" name="amenidades" value="Baño de servicio"/>
+            <label for="bano-servicio">Baño de servicio</label>
+          </div>
+          <div class="amenity">
+            <input type="checkbox" id="deposito" name="amenidades" value="Depósito"/>
+            <label for="deposito">Depósito</label>
+          </div>
+          <div class="amenity">
+            <input type="checkbox" id="piscina" name="amenidades" value="Piscina en edificio"/>
+            <label for="piscina">Piscina en edificio</label>
+          </div>
+          <div class="amenity">
+            <input type="checkbox" id="gimnasio" name="amenidades" value="Gimnasio"/>
+            <label for="gimnasio">Gimnasio</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. NOTAS -->
+      <div class="card">
+        <p class="section-title">Información adicional</p>
+        <div class="field">
+          <label for="notas">¿Algo más que debamos saber?</label>
+          <textarea id="notas" name="notas" placeholder="Vistas, piso alto, edificio boutique, mascotas, etc."></textarea>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="card">
+        <button type="submit" class="submit-btn" id="submit-btn">Enviar mis criterios de búsqueda</button>
+        <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:10px">
+          Tu información es confidencial y solo será usada para encontrarte el apartamento ideal.
+        </p>
+      </div>
+
+    </form>
+  </div>
+
+  <footer>
+    <div class="f-logo">ideal<span>HOMES</span></div>
+    <p class="f-sub">Tu apartamento ideal te está esperando</p>
+  </footer>
+
+  <script>
+    // Stepper
+    function step(id, delta) {
+      const el = document.getElementById(id);
+      const min = parseInt(el.min) || 0;
+      const max = parseInt(el.max) || 99;
+      el.value = Math.min(max, Math.max(min, parseInt(el.value) + delta));
+    }
+
+    // Form submission via Formspree AJAX
+    const form = document.getElementById('criteria-form');
+    const thankYou = document.getElementById('thank-you');
+    const tyName = document.getElementById('ty-name');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // Basic validation
+      const nombre = document.getElementById('nombre').value.trim();
+      if (!nombre) { alert('Por favor ingresa tu nombre.'); return; }
+      if (!document.getElementById('email').value.trim()) { alert('Por favor ingresa tu email.'); return; }
+      if (!document.querySelector('input[name="tipo"]:checked')) { alert('Por favor selecciona el tipo de operación.'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          tyName.textContent = nombre.split(' ')[0];
+          thankYou.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const json = await res.json();
+          alert('Error al enviar: ' + (json.error || 'intenta de nuevo.'));
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar mis criterios de búsqueda';
+        }
+      } catch (err) {
+        alert('Error de conexión. Por favor intenta de nuevo.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar mis criterios de búsqueda';
+      }
+    });
+  </script>
+</body>
+</html>
