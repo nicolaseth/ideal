@@ -372,9 +372,13 @@ Edificio con piscina, gym, teatro o, sala de juntas, zona para niños, salón co
 
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;">
         <p class="block-title">Descripción del inmueble</p>
-        <p class="block-body" style="white-space:pre-line;font-size:.82rem;color:#374151;line-height:1.65">Lindo apartamento en chico, piso 7 exterior, ascensor privado, balcón, 2 habitaciones cada una con baño, estar, baño social. Cocina abierta con nevera y zona de lavandería con lavadora incluye también Lavadora de platos.
+        <p id="desc-short" style="font-size:.82rem;color:#374151;line-height:1.65;margin-bottom:8px">Lindo apartamento en chico, piso 7 exterior, ascensor privado, balcón, 2 habitaciones cada una con baño, estar, baño social. Cocina abierta con nevera y zona de lavandería con lavadora incluye también Lavadora de platos.
+2 garajes independientes y depósito.
+Edificio con piscina, gym, teatro o, sala de juntas, zona para…</p>
+        <p id="desc-full" style="display:none;font-size:.82rem;color:#374151;line-height:1.65;white-space:pre-line;margin-bottom:8px">Lindo apartamento en chico, piso 7 exterior, ascensor privado, balcón, 2 habitaciones cada una con baño, estar, baño social. Cocina abierta con nevera y zona de lavandería con lavadora incluye también Lavadora de platos.
 2 garajes independientes y depósito.
 Edificio con piscina, gym, teatro o, sala de juntas, zona para niños, salón comunal.</p>
+        <button onclick="var s=document.getElementById('desc-short'),f=document.getElementById('desc-full'),b=this;if(f.style.display==='none'){f.style.display='block';s.style.display='none';b.textContent='Ver menos'}else{f.style.display='none';s.style.display='block';b.textContent='Ver más'}" style="background:none;border:none;color:#00796b;font-size:.78rem;font-weight:700;cursor:pointer;padding:0">Ver más</button>
       </div>
       
       <div class="info-block agenda-block">
