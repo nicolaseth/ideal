@@ -357,42 +357,38 @@
       <!-- 5. BARRIOS -->
       <div class="card">
         <p class="section-title">Barrios de interés</p>
-        <p style="font-size:.8rem;color:var(--muted);margin-bottom:6px">Selecciona hasta <strong>3 barrios</strong>.</p>
-        <p id="barrio-warning" style="display:none;font-size:.78rem;color:#dc2626;font-weight:600;margin-bottom:10px">Máximo 3 barrios permitidos.</p>
-        <div class="cb-grid">
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:18px">Indica hasta 3 barrios y, si quieres, agrega una observación para cada uno.</p>
 
-          <p class="zone-label">Norte exclusivo</p>
-          <div class="cb-item"><input type="checkbox" id="b-chico" name="barrios" value="El Chico"/><label for="b-chico">El Chico</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-chico-res" name="barrios" value="Chicó Reservado"/><label for="b-chico-res">Chicó Reservado</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-nogal" name="barrios" value="El Nogal"/><label for="b-nogal">El Nogal</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-rosales" name="barrios" value="Los Rosales"/><label for="b-rosales">Los Rosales</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-cabrera" name="barrios" value="La Cabrera"/><label for="b-cabrera">La Cabrera</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-retiro" name="barrios" value="El Retiro"/><label for="b-retiro">El Retiro</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-virrey" name="barrios" value="El Virrey"/><label for="b-virrey">El Virrey</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-carolina" name="barrios" value="La Carolina"/><label for="b-carolina">La Carolina</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-polo" name="barrios" value="El Polo"/><label for="b-polo">El Polo</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-country" name="barrios" value="Country Club"/><label for="b-country">Country Club</label></div>
-
-          <p class="zone-label">Usaquén / Norte</p>
-          <div class="cb-item"><input type="checkbox" id="b-usaquen" name="barrios" value="Usaquén"/><label for="b-usaquen">Usaquén</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-barbara" name="barrios" value="Santa Bárbara"/><label for="b-barbara">Santa Bárbara</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-calleja" name="barrios" value="La Calleja"/><label for="b-calleja">La Calleja</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-cedritos" name="barrios" value="Cedritos"/><label for="b-cedritos">Cedritos</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-niza" name="barrios" value="Niza"/><label for="b-niza">Niza</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-colina" name="barrios" value="Colina Campestre"/><label for="b-colina">Colina Campestre</label></div>
-
-          <p class="zone-label">Centro norte / Chapinero</p>
-          <div class="cb-item"><input type="checkbox" id="b-zonag" name="barrios" value="Zona G"/><label for="b-zonag">Zona G</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-zonar" name="barrios" value="Zona Rosa"/><label for="b-zonar">Zona Rosa</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-lago" name="barrios" value="El Lago"/><label for="b-lago">El Lago</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-emaus" name="barrios" value="Emaus"/><label for="b-emaus">Emaus</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-bella" name="barrios" value="Bellavista"/><label for="b-bella">Bellavista</label></div>
-          <div class="cb-item"><input type="checkbox" id="b-quinta" name="barrios" value="Quinta Camacho"/><label for="b-quinta">Quinta Camacho</label></div>
-
-          <div class="other-row">
-            <input type="checkbox" id="b-otro" onclick="document.getElementById('otro-text').style.display=this.checked?'block':'none'"/>
-            <label for="b-otro">Otro:</label>
-            <input type="text" id="otro-text" name="barrio_otro" placeholder="Escribe el barrio"/>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="field-row">
+            <div class="field">
+              <label for="barrio1">Barrio 1</label>
+              <input type="text" id="barrio1" name="barrio_1" placeholder="Ej: Los Rosales"/>
+            </div>
+            <div class="field">
+              <label for="obs1">Observación</label>
+              <input type="text" id="obs1" name="obs_barrio_1" placeholder="Ej: Arriba de la circunvalar"/>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="barrio2">Barrio 2</label>
+              <input type="text" id="barrio2" name="barrio_2" placeholder="Ej: El Nogal"/>
+            </div>
+            <div class="field">
+              <label for="obs2">Observación</label>
+              <input type="text" id="obs2" name="obs_barrio_2" placeholder="Ej: Cerca al parque"/>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="barrio3">Barrio 3</label>
+              <input type="text" id="barrio3" name="barrio_3" placeholder="Ej: La Cabrera"/>
+            </div>
+            <div class="field">
+              <label for="obs3">Observación</label>
+              <input type="text" id="obs3" name="obs_barrio_3" placeholder="Ej: Entre calles 85 y 90"/>
+            </div>
           </div>
         </div>
       </div>
@@ -454,21 +450,6 @@
   </footer>
 
   <script>
-    // Neighbourhood max-3 enforcement
-    const barrioBoxes = document.querySelectorAll('input[name="barrios"]');
-    const barrioWarning = document.getElementById('barrio-warning');
-    barrioBoxes.forEach(cb => {
-      cb.addEventListener('change', () => {
-        const checked = document.querySelectorAll('input[name="barrios"]:checked').length;
-        if (checked > 3) { cb.checked = false; }
-        const nowChecked = document.querySelectorAll('input[name="barrios"]:checked').length;
-        barrioWarning.style.display = nowChecked >= 3 ? 'block' : 'none';
-        barrioBoxes.forEach(b => {
-          if (!b.checked) b.disabled = nowChecked >= 3;
-        });
-      });
-    });
-
     // Stepper
     function step(id, delta) {
       const el = document.getElementById(id);
