@@ -357,7 +357,8 @@
       <!-- 5. BARRIOS -->
       <div class="card">
         <p class="section-title">Barrios de interés</p>
-        <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px">Selecciona todos los que te interesen.</p>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:6px">Selecciona hasta <strong>3 barrios</strong>.</p>
+        <p id="barrio-warning" style="display:none;font-size:.78rem;color:#dc2626;font-weight:600;margin-bottom:10px">Máximo 3 barrios permitidos.</p>
         <div class="cb-grid">
 
           <p class="zone-label">Norte exclusivo</p>
@@ -453,6 +454,21 @@
   </footer>
 
   <script>
+    // Neighbourhood max-3 enforcement
+    const barrioBoxes = document.querySelectorAll('input[name="barrios"]');
+    const barrioWarning = document.getElementById('barrio-warning');
+    barrioBoxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const checked = document.querySelectorAll('input[name="barrios"]:checked').length;
+        if (checked > 3) { cb.checked = false; }
+        const nowChecked = document.querySelectorAll('input[name="barrios"]:checked').length;
+        barrioWarning.style.display = nowChecked >= 3 ? 'block' : 'none';
+        barrioBoxes.forEach(b => {
+          if (!b.checked) b.disabled = nowChecked >= 3;
+        });
+      });
+    });
+
     // Stepper
     function step(id, delta) {
       const el = document.getElementById(id);
