@@ -299,13 +299,13 @@
         <label>Rango de precio (en millones COP)<span class="req">*</span></label>
         <div class="price-range">
           <div style="flex:1">
-            <input type="number" id="precio-min" name="precio_min" min="100" max="10000" placeholder="Mínimo" style="text-align:center" required/>
-            <p class="price-unit">Mín (millones)</p>
+            <input type="text" id="precio-min" name="precio_min" placeholder="$ 0" style="text-align:center" required oninput="fmtPrice(this)"/>
+            <p class="price-unit">Mínimo (COP)</p>
           </div>
           <span class="price-sep">—</span>
           <div style="flex:1">
-            <input type="number" id="precio-max" name="precio_max" min="100" max="10000" placeholder="Máximo" style="text-align:center" required/>
-            <p class="price-unit">Máx (millones)</p>
+            <input type="text" id="precio-max" name="precio_max" placeholder="$ 0" style="text-align:center" required oninput="fmtPrice(this)"/>
+            <p class="price-unit">Máximo (COP)</p>
           </div>
         </div>
       </div>
@@ -462,6 +462,13 @@
   </footer>
 
   <script>
+    // Price formatter — adds $ and dot-thousands separator as user types
+    function fmtPrice(input) {
+      const digits = input.value.replace(/\D/g, '');
+      if (!digits) { input.value = ''; return; }
+      input.value = '$ ' + parseInt(digits, 10).toLocaleString('es-CO');
+    }
+
     // Stepper
     function step(id, delta) {
       const el = document.getElementById(id);
@@ -485,8 +492,8 @@
         [document.getElementById('telefono').value.trim(),      'Por favor ingresa tu teléfono.'],
         [document.getElementById('email').value.trim(),         'Por favor ingresa tu email.'],
         [document.getElementById('tiempo').value,               'Por favor selecciona tu rango de tiempo.'],
-        [document.getElementById('precio-min').value,           'Por favor ingresa el precio mínimo.'],
-        [document.getElementById('precio-max').value,           'Por favor ingresa el precio máximo.'],
+        [document.getElementById('precio-min').value.replace(/\D/g,''), 'Por favor ingresa el precio mínimo.'],
+        [document.getElementById('precio-max').value.replace(/\D/g,''), 'Por favor ingresa el precio máximo.'],
         [document.getElementById('metraje').value,              'Por favor ingresa el metraje mínimo.'],
         [document.getElementById('piso').value,                 'Por favor ingresa el piso mínimo.'],
         [document.getElementById('anio').value,                 'Por favor ingresa el año de construcción mínimo.'],
