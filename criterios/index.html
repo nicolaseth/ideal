@@ -275,18 +275,26 @@
         </div>
       </div>
 
-      <!-- 2. TIPO DE OPERACIÓN -->
+      <!-- 2. TIEMPO DE DECISIÓN -->
       <div class="card">
-        <p class="section-title">Tipo de operación</p>
-        <div class="radio-group">
-          <div class="radio-pill">
-            <input type="radio" id="tipo-compra" name="tipo" value="Compra" required/>
-            <label for="tipo-compra">Compra</label>
-          </div>
-          <div class="radio-pill">
-            <input type="radio" id="tipo-arriendo" name="tipo" value="Arriendo"/>
-            <label for="tipo-arriendo">Arriendo</label>
-          </div>
+        <p class="section-title">Tiempo para tomar la decisión</p>
+        <div class="field">
+          <label for="tiempo">¿Cuál es tu rango de tiempo para tomar la decisión?</label>
+          <select id="tiempo" name="tiempo_decision" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="1 mes">1 mes</option>
+            <option value="2 meses">2 meses</option>
+            <option value="3 meses">3 meses</option>
+            <option value="4 meses">4 meses</option>
+            <option value="5 meses">5 meses</option>
+            <option value="6 meses">6 meses</option>
+            <option value="7 meses">7 meses</option>
+            <option value="8 meses">8 meses</option>
+            <option value="9 meses">9 meses</option>
+            <option value="10 meses">10 meses</option>
+            <option value="11 meses">11 meses</option>
+            <option value="1 año">1 año</option>
+          </select>
         </div>
       </div>
 
@@ -472,7 +480,7 @@
       const nombre = document.getElementById('nombre').value.trim();
       if (!nombre) { alert('Por favor ingresa tu nombre.'); return; }
       if (!document.getElementById('email').value.trim()) { alert('Por favor ingresa tu email.'); return; }
-      if (!document.querySelector('input[name="tipo"]:checked')) { alert('Por favor selecciona el tipo de operación.'); return; }
+      if (!document.getElementById('tiempo').value) { alert('Por favor selecciona tu rango de tiempo para tomar la decisión.'); return; }
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Enviando…';
