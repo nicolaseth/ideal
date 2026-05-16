@@ -228,6 +228,7 @@
     .f-logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -.4px; margin-bottom: 6px; }
     .f-logo span { color: var(--green); }
     .f-sub { font-size: .78rem; color: rgba(253,236,229,.4); }
+    .req { color: #dc2626; margin-left: 2px; }
   </style>
 </head>
 <body>
@@ -244,6 +245,9 @@
     </div>
   </section>
 
+  <div style="max-width:720px;margin:16px auto 0;padding:0 20px;font-size:.78rem;color:var(--muted)">
+    <span class="req">*</span> Campos obligatorios
+  </div>
   <div class="form-wrap">
 
     <!-- THANK YOU STATE -->
@@ -292,15 +296,15 @@
       <!-- 3. PRESUPUESTO -->
       <div class="card">
         <p class="section-title">Presupuesto</p>
-        <label>Rango de precio (en millones COP)</label>
+        <label>Rango de precio (en millones COP)<span class="req">*</span></label>
         <div class="price-range">
           <div style="flex:1">
-            <input type="number" id="precio-min" name="precio_min" min="100" max="10000" placeholder="Mínimo" style="text-align:center"/>
+            <input type="number" id="precio-min" name="precio_min" min="100" max="10000" placeholder="Mínimo" style="text-align:center" required/>
             <p class="price-unit">Mín (millones)</p>
           </div>
           <span class="price-sep">—</span>
           <div style="flex:1">
-            <input type="number" id="precio-max" name="precio_max" min="100" max="10000" placeholder="Máximo" style="text-align:center"/>
+            <input type="number" id="precio-max" name="precio_max" min="100" max="10000" placeholder="Máximo" style="text-align:center" required/>
             <p class="price-unit">Máx (millones)</p>
           </div>
         </div>
@@ -337,18 +341,18 @@
             </div>
           </div>
           <div class="field">
-            <label>Metraje mínimo (m²)</label>
-            <input type="number" id="metraje" name="metraje_min" min="30" placeholder="Ej: 120"/>
+            <label>Metraje mínimo (m²)<span class="req">*</span></label>
+            <input type="number" id="metraje" name="metraje_min" min="30" placeholder="Ej: 120" required/>
           </div>
         </div>
         <div class="field-row" style="margin-top:14px">
           <div class="field">
-            <label>Piso mínimo</label>
-            <input type="number" id="piso" name="piso_min" min="1" placeholder="Ej: 3"/>
+            <label>Piso mínimo<span class="req">*</span></label>
+            <input type="number" id="piso" name="piso_min" min="1" placeholder="Ej: 3" required/>
           </div>
           <div class="field">
-            <label>Año de construcción mínimo</label>
-            <input type="number" id="anio" name="anio_construccion_min" min="1970" max="2026" placeholder="Ej: 2010"/>
+            <label>Año de construcción mínimo<span class="req">*</span></label>
+            <input type="number" id="anio" name="anio_construccion_min" min="1970" max="2026" placeholder="Ej: 2010" required/>
           </div>
         </div>
       </div>
@@ -361,8 +365,8 @@
         <div style="display:flex;flex-direction:column;gap:14px">
           <div class="field-row">
             <div class="field">
-              <label for="barrio1">Barrio 1</label>
-              <input type="text" id="barrio1" name="barrio_1" placeholder="Ej: Los Rosales"/>
+              <label for="barrio1">Barrio 1<span class="req">*</span></label>
+              <input type="text" id="barrio1" name="barrio_1" placeholder="Ej: Los Rosales" required/>
             </div>
             <div class="field">
               <label for="obs1">Observación</label>
@@ -436,8 +440,8 @@
       <div class="card">
         <p class="section-title">Información adicional</p>
         <div class="field">
-          <label for="notas">¿Algo más que debamos saber?</label>
-          <textarea id="notas" name="notas" placeholder="Vistas, piso alto, edificio boutique, mascotas, etc."></textarea>
+          <label for="notas">¿Algo más que debamos saber?<span class="req">*</span></label>
+          <textarea id="notas" name="notas" placeholder="Vistas, piso alto, edificio boutique, mascotas, etc." required></textarea>
         </div>
       </div>
 
@@ -475,11 +479,23 @@
     form.addEventListener('submit', async e => {
       e.preventDefault();
 
-      // Basic validation
-      const nombre = document.getElementById('nombre').value.trim();
-      if (!nombre) { alert('Por favor ingresa tu nombre.'); return; }
-      if (!document.getElementById('email').value.trim()) { alert('Por favor ingresa tu email.'); return; }
-      if (!document.getElementById('tiempo').value) { alert('Por favor selecciona tu rango de tiempo para tomar la decisión.'); return; }
+      // Validation
+      const checks = [
+        [document.getElementById('nombre').value.trim(),        'Por favor ingresa tu nombre.'],
+        [document.getElementById('telefono').value.trim(),      'Por favor ingresa tu teléfono.'],
+        [document.getElementById('email').value.trim(),         'Por favor ingresa tu email.'],
+        [document.getElementById('tiempo').value,               'Por favor selecciona tu rango de tiempo.'],
+        [document.getElementById('precio-min').value,           'Por favor ingresa el precio mínimo.'],
+        [document.getElementById('precio-max').value,           'Por favor ingresa el precio máximo.'],
+        [document.getElementById('metraje').value,              'Por favor ingresa el metraje mínimo.'],
+        [document.getElementById('piso').value,                 'Por favor ingresa el piso mínimo.'],
+        [document.getElementById('anio').value,                 'Por favor ingresa el año de construcción mínimo.'],
+        [document.getElementById('barrio1').value.trim(),       'Por favor ingresa al menos un barrio de interés.'],
+        [document.getElementById('notas').value.trim(),         'Por favor completa el campo de información adicional.'],
+      ];
+      for (const [val, msg] of checks) {
+        if (!val) { alert(msg); return; }
+      }
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Enviando…';
