@@ -440,8 +440,8 @@
       <div class="card">
         <p class="section-title">Información adicional</p>
         <div class="field">
-          <label for="notas">¿Algo más que debamos saber?<span class="req">*</span></label>
-          <textarea id="notas" name="notas" placeholder="Vistas, piso alto, edificio boutique, mascotas, etc." required></textarea>
+          <label for="notas">¿Algo más que debamos saber?</label>
+          <textarea id="notas" name="notas" placeholder="Vistas, piso alto, edificio boutique, mascotas, etc."></textarea>
         </div>
       </div>
 
@@ -491,7 +491,6 @@
         [document.getElementById('piso').value,                 'Por favor ingresa el piso mínimo.'],
         [document.getElementById('anio').value,                 'Por favor ingresa el año de construcción mínimo.'],
         [document.getElementById('barrio1').value.trim(),       'Por favor ingresa al menos un barrio de interés.'],
-        [document.getElementById('notas').value.trim(),         'Por favor completa el campo de información adicional.'],
       ];
       for (const [val, msg] of checks) {
         if (!val) { alert(msg); return; }
